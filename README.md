@@ -1,26 +1,27 @@
 
 ## 数学建模与基本假设
-蛋白质序列$x\ =\left[x_1,x_2,\ \ldots,\ x_l\right]$的各个位点独立作用于表型y，定义z为
+蛋白质序列$x =[x_1,x_2,..., x_l]$的各个位点独立作用于表型$y$，定义$z$为
 
-$$z=\theta_0+\left[\theta_1,\theta_2,\ldots,\theta_l\right]\ \left[x_1,x_2,\ldots,x_l\right]^\mathrm{T}
-\theta_i=\left[\theta_{i1},\theta_{i2},\ldots,\ \theta_{ic}\right]$$
+$$z=\theta_0+[\theta_1,\theta_2,...,\theta_l] [x_1,x_2,...,x_l]^\mathrm{T}$$
 
-$$x_i=\left[x_{i1},\ x_{i2},\ \ldots,\ x_{ic}\right]^\mathrm{T}$$
+$$\theta_i= [\theta_{i1},\theta_{i2},...,\theta_{ic}]$$
+
+$$x_i=[x_{i1},\ x_{i2},...,\ x_{ic}]^\mathrm{T}$$
 
 其中$c$为序列$x_i$的某位点所有可能事件的数量（如蛋白质有20种氨基酸，c为$20$），$l$为序列长度。$x_i$为one-hot向量，形如$\left[0,\ 0,\ \ldots,1\ ,\ \ldots,\ 0\right]^T$，因此权重$\theta_{ij}$直接反映了$i$位置第$j$种事件对表型$y$的影响。最后再加Sigmoid函数，预测值
 
 $$\hat{y}=\frac{e^z}{e^z+1}$$
 
 二分类任务（表型只有界限分明的2种）中，损失函数为交叉熵损失，即
-$$\mathcal{L}\left(\theta\right)=\sum_{n} y_i\log{\widehat{y}_i}+\left(1-y_i\right)\ log\left(1-\widehat{y}_i\right)$$
+$$\mathcal{L}(\theta)=\sum_{n} y_i\log{\hat{y}_i}+(1-y_i)\ log (1-\hat{y}_i)$$
 
 回归任务则主要基于极大似然估计，损失函数为MSE
-$$\mathcal{L}\left(\theta\right)=\sum_n (y - \hat{y})^2$$
+$$\mathcal{L}(\theta)=\sum_n (y - \hat{y})^2$$
 
 ## 全变分正则化项
 向损失函数中引入全变分正则化项$L_{tv}$。生物学解释为，由于蛋白质的相邻残基往往属于同一结构域，故二者常具有连续性，其重要性（参数）相比于更远的残基之间倾向于差别不太大。TV正则化定义为
 
-$$L_{tv}=\ \lambda\sum_{n}\sum_{i=1}^{l-1}{|\sum_{j=1}^{c}{{(\theta}_{i+1,j}-\theta_{i,j})|}}$$
+$$L_{tv}=\lambda\sum_{n}\sum_{i=1}^{l-1}{|\sum_{j=1}^{c}{{(\theta}_{i+1,j}-\theta_{i,j})|}}$$
 
 ## 数据格式和使用方法
 
@@ -61,4 +62,5 @@ AGTCAGCTACGT......
 - 全变分正则化的数学含义及其生物可解释性；
 - 每个位点独立对表型贡献是否合理；
 - 无法处理不等长的输入（对齐后，较短的氨基酸中间存在“-”），因此只能用野生型序列补齐，是否有更好的解决方法。
+
 

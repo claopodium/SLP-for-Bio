@@ -44,7 +44,7 @@ def main():
         df = pd.DataFrame(records)
     elif ext == ".csv":
         df =pd.read_csv(data_path)
-        df = pd.DataFrame(df)
+        df = pd.DataFrame(extract(df))
 
     X,y = to_oh_tensor(df)
 
@@ -56,4 +56,5 @@ def main():
     # wt_seq主要传递野生型序列，用于在图上标识（黑色圆点），ref_seq是用于求差值作图的，最好取wt_seq或"*"*seq_len
 
 if __name__ == "__main__":
+
     main()

@@ -1,5 +1,5 @@
 import torch
-from .model import Model
+from .model.slp import Model
 from .encoding import one_hot_encode
 
 def load_model(weight_path, seq_length, alphabet, device="cpu"):
@@ -31,4 +31,5 @@ def predict(weight_path, seq, alphabet):
     X = torch.tensor(oh, dtype=torch.float32).unsqueeze(0)
     with torch.no_grad():
         return model(X)
+
 

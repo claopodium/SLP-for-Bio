@@ -63,7 +63,6 @@ def heatmap(model, alphabet, wt_seq = None, ref_seq=None, chunk_size= 100):
 
         ax.set_xlabel("Position")
         ax.set_ylabel("Amino Acid")
-        title_ref = f" (Compared with Arabidopsis)" if ref_seq is not None else ""
         ax.set_title(f"Weight Heatmap positions {start+1}-{end}{title_ref}")
 
         # Colorbar
@@ -75,4 +74,5 @@ def heatmap(model, alphabet, wt_seq = None, ref_seq=None, chunk_size= 100):
 
         # 保存文件
         fig.savefig(f"part_{i}_pos_{start+1}_{end}.png", dpi=300)
+
 

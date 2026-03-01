@@ -23,7 +23,7 @@ def train(model, X, y, save_path, lr=1e-3, epochs=500, Loss = NLL, tv_reg = True
     for epoch in range(epochs):
         optimizer.zero_grad()
         y_hat = model(X)
-        loss = Cross_entropy(y_hat, y)
+        loss = Loss(y_hat, y)
 
         l1_penalty = l1(model.theta)
         
@@ -43,3 +43,4 @@ def train(model, X, y, save_path, lr=1e-3, epochs=500, Loss = NLL, tv_reg = True
 
     save_model(model, save_path)
     loss_plt(loss_ls)
+

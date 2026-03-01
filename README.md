@@ -59,7 +59,25 @@ python regression.py --data DATAPATH --save_path SAVEPATH --length LENGTH
 
 ### 预测功能
 
-在 predict.py 中把训练好的权重文件路径复制上去，接着运行，输入待预测的序列即可。注意必须长度与训练长度一致，或者自行用野生型补全。
+```bash
+python predict.py --weight WEIGHTPATH --seq SEQUENCE --type DNA or RNA or PROTEIN
+```
+
+可以尝试用已经给出的权重文件做以下预测
+
+```bash
+python predict.py --weight ./weight/demo_weight --seq AAKLILNGKTLKGETTTEAVDAATAEKVFKQYANDNGVDGEWTYDDATKTFTVTE --type PROTEIN
+```
+
+可以得到预测值为 $0.0010543775279074907$ 
+
+或者把序列进行大面积的替换
+
+```bash
+python predict.py --weight ./weight/demo_weight --seq AAKLILNGKTLKGETTTEAVDPPPPPPPPPPYANDNGVDGEWTYDDATKTFTVTE --type PROTEIN
+```
+
+得到预测值为 $0.003250806825235486$
 
 ## 可视化方法
 
@@ -79,4 +97,5 @@ python regression.py --data DATAPATH --save_path SAVEPATH --length LENGTH
 ## 数据
 
 项目中给出gb1蛋白数据集，约50,000个样本，可用于跑通模型。由于数据集较大，故压缩为.zip文件上传。
+
 

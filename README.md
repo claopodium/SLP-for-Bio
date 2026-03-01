@@ -63,22 +63,6 @@ python regression.py --data DATAPATH --save_path SAVEPATH --length LENGTH
 python predict.py --weight WEIGHTPATH --seq SEQUENCE --type DNA or RNA or PROTEIN
 ```
 
-可以尝试用已经给出的权重文件做以下预测
-
-```bash
-python predict.py --weight ./weight/demo_weight --seq AAKLILNGKTLKGETTTEAVDAATAEKVFKQYANDNGVDGEWTYDDATKTFTVTE --type PROTEIN
-```
-
-可以得到预测值为 $0.0010543775279074907$ 
-
-或者把序列进行大面积的替换
-
-```bash
-python predict.py --weight ./weight/demo_weight --seq AAKLILNGKTLKGETTTEAVDPPPPPPPPPPYANDNGVDGEWTYDDATKTFTVTE --type PROTEIN
-```
-
-得到预测值为 $0.003250806825235486$
-
 ## 可视化方法
 
 权重文件形状为 $c\times l$ ，主要可视化方式选择热图，横轴是位置，纵轴是20种氨基酸，每个格点的颜色深浅表征了该位置的该种氨基酸对表型的贡献或影响。但是这个方法存在问题，如果直接对权重的数值进行作图，将会各种颜色混杂、非常混乱，极为不直观，需要选择一个参考值进行去中心化。
@@ -97,5 +81,6 @@ python predict.py --weight ./weight/demo_weight --seq AAKLILNGKTLKGETTTEAVDPPPPP
 ## 数据
 
 项目中给出gb1蛋白数据集，约50,000个样本，可用于跑通模型。由于数据集较大，故压缩为.zip文件上传。
+
 
 

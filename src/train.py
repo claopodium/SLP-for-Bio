@@ -13,16 +13,30 @@ def save_model(model, save_path):
 
     torch.save(model.state_dict(), save_path)
 
-def train(model, X, y, save_path, lr=1e-3, epochs=500, Loss = NLL, tv_reg = True):
+def train(model, X, y, save_path, lr=1e-3, epochs=500, Loss = NLL, tv_reg = True, regression = False):
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
     loss_ls = []
     lambda_l1 = 1e-4 
     lambda_tv = 1e-3
 
+    y_min = torch.min(y)
+    y_max = torch.max(y)
+
+    if regression:
+        y = (y - torch.min(y)) / (torch.max(y) - torch.min(y))
+        
+        torch.save({
+        "model_state_dict": model.state_dict(),
+        "y_min": y_min,
+        "y_max": y_max
+        }, save_path)
+
     print("Training...")
     for epoch in range(epochs):
         optimizer.zero_grad()
+
         y_hat = model(X)
+
         loss = Loss(y_hat, y)
 
         l1_penalty = l1(model.theta)
@@ -43,4 +57,3 @@ def train(model, X, y, save_path, lr=1e-3, epochs=500, Loss = NLL, tv_reg = True
 
     save_model(model, save_path)
     loss_plt(loss_ls)
-

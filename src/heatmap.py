@@ -25,12 +25,9 @@ def heatmap(model, alphabet, wt_seq = None, ref_seq=None, chunk_size= 100):
     if ref_seq is not None:
         aa_to_idx = {aa: i for i, aa in enumerate(alphabet)}
         base_vals = np.zeros(L)
-        wt_vals = np.zeros(L)
         for l, aa in enumerate(ref_seq):
             base_vals[l] = theta[l, aa_to_idx.get(aa, 0)]
-        for l1,aa1 in enumerate(ref_seq):
-            wt_vals[l1] = theta[l1, aa_to_idx.get(aa1, 0)]
-        theta_plot = theta - base_vals[:, None] - wt_vals[:,None]  # Δφ
+        theta_plot = theta - base_vals[:, None]
     else:
         theta_plot = theta
 
@@ -63,7 +60,7 @@ def heatmap(model, alphabet, wt_seq = None, ref_seq=None, chunk_size= 100):
 
         ax.set_xlabel("Position")
         ax.set_ylabel("Amino Acid")
-        ax.set_title(f"Weight Heatmap positions {start+1}-{end}{title_ref}")
+        ax.set_title(f"Weight Heatmap positions {start+1}-{end}")
 
         # Colorbar
         cbar = fig.colorbar(im, ax=ax, fraction=0.05, pad=0.02)
@@ -74,5 +71,4 @@ def heatmap(model, alphabet, wt_seq = None, ref_seq=None, chunk_size= 100):
 
         # 保存文件
         fig.savefig(f"part_{i}_pos_{start+1}_{end}.png", dpi=300)
-
 

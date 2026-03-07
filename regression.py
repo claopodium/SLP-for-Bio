@@ -47,14 +47,13 @@ def main():
         df = pd.DataFrame(extract(df))
 
     X,y = to_oh_tensor(df)
-
+    
     model = Model(seq_len, "PROTEIN")
-    train(model, X, y, save_path, lr=1e-3, epochs=10, tv_reg=True)
+    train(model, X, y, save_path, lr=1e-3, epochs=50, tv_reg=True, regression=True)
     # 可调整的超参数主要是epochs训练轮数，tv_reg是否加入全变分正则化，损失函数曲线自动绘制
 
-    heatmap(model, "PROTEIN", wt_seq = wt_seq, ref_seq="*"*seq_len)
+    heatmap(model, "PROTEIN", wt_seq = wt_seq, ref_seq=wt_seq)
     # wt_seq主要传递野生型序列，用于在图上标识（黑色圆点），ref_seq是用于求差值作图的，最好取wt_seq或"*"*seq_len
 
 if __name__ == "__main__":
-
     main()

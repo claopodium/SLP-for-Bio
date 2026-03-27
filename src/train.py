@@ -17,6 +17,7 @@ def train(model, X, y, save_path, lr=1e-3, epochs=1, Loss = NLL, tv_reg = True, 
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
     loss_ls = []
     lambda_l1 = 1e-4 
+    lambda_l2 = 1e-3
     lambda_tv = 1e-3
 
     y_min = torch.min(y)
@@ -34,6 +35,10 @@ def train(model, X, y, save_path, lr=1e-3, epochs=1, Loss = NLL, tv_reg = True, 
         loss = Loss(y_hat, y)
 
         l1_penalty = l1(model.theta)
+        l2_penalty = l2(model.theta)
+
+        loss += lambda_l2 * l2_penalty
+
         
         if tv_reg:
             ltv = tv(model.theta)
